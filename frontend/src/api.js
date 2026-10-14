@@ -1,6 +1,9 @@
 // QueueEase Central API Client
 
-const BASE_URL = '/api';
+const RAW_API_URL = import.meta.env.VITE_API_BASE_URL || '';
+const BASE_URL = RAW_API_URL
+  ? (RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL.replace(/\/+$/, '')}/api`)
+  : '/api';
 
 export function getToken() {
   return localStorage.getItem('queueease_token');
