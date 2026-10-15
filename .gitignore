@@ -1,5 +1,6 @@
 # Build directories
 target/
+backend/target/
 frontend/dist/
 frontend/node_modules/
 

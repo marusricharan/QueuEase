@@ -1,13 +1,13 @@
-# Multi-stage Dockerfile for QueueEase Spring Boot Backend
+# Multi-stage Dockerfile for QueueEase Spring Boot Backend (Root Context)
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Cache dependencies
-COPY pom.xml .
+COPY backend/pom.xml .
 RUN mvn dependency:go-offline -B
 
 # Build application
-COPY src ./src
+COPY backend/src ./src
 RUN mvn clean package -DskipTests
 
 # Run stage

@@ -93,8 +93,28 @@ The application header features a **Quick Demo Switcher** allowing instant 1-cli
 - **MySQL 8.0** running on `localhost:3306`
 - **Node.js 18+** & npm (for frontend modification)
 
+### Project Architecture
+```text
+QueuEase/
+├── backend/                   # Spring Boot 3 & Java 17 Application
+│   ├── src/                   # REST controllers, JPA entities, security, services
+│   ├── pom.xml                # Maven configuration with MySQL, PostgreSQL, H2
+│   ├── Dockerfile             # Multi-stage container build
+│   └── mvnw.cmd               # Maven wrapper
+├── frontend/                  # React 19 & Vite Web Application
+│   ├── src/                   # Components, views, API client, design system
+│   ├── package.json           # Dependencies and scripts
+│   ├── vercel.json            # Vercel SPA routing
+│   └── vite.config.js         # Build tooling & proxy
+├── Dockerfile                 # Root Dockerfile for Render deployment
+├── render.yaml                # Render Blueprint specification
+├── vercel.json                # Root Vercel deployment configuration
+├── start-queueease.bat        # 1-Click Windows launcher
+└── push-to-github.bat         # Git push helper
+```
+
 ### Database Configuration
-The application connects to MySQL via `src/main/resources/application.properties`:
+The application connects to MySQL via `backend/src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/queueease?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 spring.datasource.username=${DB_USER:root}
@@ -106,13 +126,15 @@ spring.datasource.password=${DB_PASSWORD:1256}
 The pre-compiled React frontend is embedded directly in Spring Boot:
 ```powershell
 # From the project directory:
-java -jar target\queueease-1.0.0.jar
+java -jar backend\target\queueease-1.0.0.jar
 ```
+*(Or simply double-click `start-queueease.bat`)*.
 Open **[http://localhost:8080](http://localhost:8080)** in your browser.
 
 ### Development Mode (Optional)
 1. **Backend**:
    ```powershell
+   cd backend
    .\mvnw.cmd spring-boot:run
    ```
 2. **Frontend** (in another terminal):

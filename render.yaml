@@ -3,7 +3,8 @@ services:
     name: queueease-backend
     runtime: docker
     plan: free
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
     healthCheckPath: /api/businesses
     envVars:
       - key: SPRING_PROFILES_ACTIVE

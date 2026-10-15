@@ -11,5 +11,14 @@ echo Launching Spring Boot server on http://localhost:8080 ...
 echo (The application serves both the Backend API and React Frontend)
 echo.
 start http://localhost:8080
-java -jar target\queueease-1.0.0.jar
+if exist "backend\target\queueease-1.0.0.jar" (
+    java -jar backend\target\queueease-1.0.0.jar
+) else if exist "target\queueease-1.0.0.jar" (
+    java -jar target\queueease-1.0.0.jar
+) else (
+    echo Building backend package...
+    cd backend
+    call mvnw.cmd package -DskipTests
+    java -jar target\queueease-1.0.0.jar
+)
 pause
